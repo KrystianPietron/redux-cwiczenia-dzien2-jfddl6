@@ -2,9 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addToDo } from './Store/ToDos';
 
-const mapDispatchToProps = dispatch => ({
-    addToDo: text => dispatch(addToDo(text))
+
+const mapStateToProps = state => ({
+    _todos: state.todos.allTodos,
+    _visibleTodos: state.todos.visibleTodos
 })
+const mapDispatchToProps = dispatch => ({
+    _addToDo: text => dispatch(addToDo(text))
+})
+
+
 class ToDoList extends React.Component {
     state = {}
 
@@ -13,14 +20,14 @@ class ToDoList extends React.Component {
     }
     handleButtonClick = () => {
         console.log('want to save todo: ', this.state.value)
-        this.props.addToDo(this.state.value)
+        this.props._addToDo(this.state.value)
     }
     render() {
         return (
             <div>
                 <input onChange={this.handleInputChange} />
                 <button onClick={this.handleButtonClick}>Add ToDo</button>
-                {this.props.todos.map(todo =>
+                {this.props._todos.map(todo =>
                     <div key={todo.text}>
                         {todo.text}
                     </div>
@@ -29,4 +36,4 @@ class ToDoList extends React.Component {
         )
     }
 }
-export default connect(null, mapDispatchToProps)(ToDoList)
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoList)
