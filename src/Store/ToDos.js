@@ -30,10 +30,10 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ADD_TODO:
             const newToDo = { text: action.text, completed: false }
-            const newVisibleTodos = newToDo.text.includes(state.filter)?
-            [...state.visibleTodos, newToDo]
-            :
-            state.visibleTodos
+            const newVisibleTodos = newToDo.text.includes(state.filter) ?
+                [...state.visibleTodos, newToDo]
+                :
+                state.visibleTodos
             return {
                 ...state,
                 allTodos: [
@@ -46,7 +46,7 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 filter: action.input,
-                visibleTodos: state.allTodos.filter(todo => todo.text.includes(action.input))
+                visibleTodos: getVisibleTodos(state, action)
             }
         case TOGGLE_TODO:
             return {
@@ -59,14 +59,22 @@ export default (state = INITIAL_STATE, action) => {
                         }
                     }
                     return todo
-                })
+                }),
+                visibleTodos: getVisibleTodos(state, action)
             }
         case DELETE_TODO:
             return {
                 ...state,
-                allTodos: state.allTodos.filter((todo, index) => (index !== action.index))
+                allTodos: state.allTodos.filter((todo, index) => (index !== action.index)),
+                visibleTodos: getVisibleTodos(state, action)
             }
         default:
             return state
     }
+}
+
+function getVisibleTodos(state) {
+    return state.allTodos.filter(todo =>
+        todo.text.includes(state.filter)
+    )
 }
