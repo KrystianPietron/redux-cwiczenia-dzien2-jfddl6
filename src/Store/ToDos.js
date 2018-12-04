@@ -46,35 +46,37 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 filter: action.input,
-                visibleTodos: getVisibleTodos(state, action)
+                visibleTodos: getVisibleTodos(state.allTodos, action.input)
             }
         case TOGGLE_TODO:
+            const allTodosWithToggled = state.allTodos.map((todo, index) => {
+                if (index === action.index) {
+                    return {
+                        ...todo,
+                        completed: !todo.completed
+                    }
+                }
+                return todo
+            })
             return {
                 ...state,
-                allTodos: state.allTodos.map((todo, index) => {
-                    if (index === action.index) {
-                        return {
-                            ...todo,
-                            completed: !todo.completed
-                        }
-                    }
-                    return todo
-                }),
-                visibleTodos: getVisibleTodos(state, action)
+                allTodos: allTodosWithToggled,
+                visibleTodos: getVisibleTodos(allTodosWithToggled, state.filter)
             }
         case DELETE_TODO:
+            const allTodosWithDeleted = state.allTodos.filter((todo, index) => !(index === action.index))
             return {
                 ...state,
-                allTodos: state.allTodos.filter((todo, index) => (index !== action.index)),
-                visibleTodos: getVisibleTodos(state, action)
+                allTodos: allTodosWithDeleted,
+                visibleTodos: getVisibleTodos(allTodosWithDeleted, state.filter)
             }
         default:
             return state
     }
 }
 
-function getVisibleTodos(state) {
-    return state.allTodos.filter(todo =>
-        todo.text.includes(state.filter)
+function getVisibleTodos(allTodos, filter) {
+    return allTodos.filter(todo =>
+        todo.text.includes(filter)
     )
 }
