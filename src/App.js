@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import ToDoList from './ToDoList'
+import Counter from './Counter';
 
 class App extends Component {
   render() {
     return (
-      <ToDoList/>
+      <div>
+        <ToDoList />
+        <Counter />
+      </div>
     );
   }
 }

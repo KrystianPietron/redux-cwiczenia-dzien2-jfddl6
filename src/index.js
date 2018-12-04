@@ -8,15 +8,15 @@ import App from './App';
 
 import { combineReducers, createStore } from 'redux'
 import todos, { addToDo, filterTodos, toggleTodo, deleteTodo } from './Store/ToDos'
-import Counter, { addInc, addDec, reset } from './Store/Counter'
-import ItemsList, { addItem } from './Store/ItemsList'
+import counter, { addInc, addDec, reset } from './Store/Counter'
+import itemsList, { addItem } from './Store/ItemsList'
 
 
 
 const rootReducer = combineReducers({
-    ItemsList,
+    itemsList,
     todos,
-    Counter
+    counter
 })
 const store = createStore(rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ &&

@@ -2,11 +2,13 @@ const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 const RESET = 'RESET'
 
-export const addInc = () => ({
-    type: INCREMENT
+export const addInc = (howMatchInc) => ({
+    type: INCREMENT,
+    howMatchInc
 })
-export const addDec = () => ({
-    type: DECREMENT
+export const addDec = (howMatchDec) => ({
+    type: DECREMENT,
+    howMatchDec
 })
 export const reset = () => ({
     type: RESET
@@ -14,9 +16,9 @@ export const reset = () => ({
 export default (state = 0, action) => {
     switch (action.type) {
         case INCREMENT:
-            return (state + 1)
+            return (state + action.howMatchInc)
         case DECREMENT:
-            return (state - 1)
+            return Math.max((state - action.howMatchDec), 0)
         case RESET:
             return (state = 0)
         default:
