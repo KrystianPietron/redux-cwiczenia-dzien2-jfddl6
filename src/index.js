@@ -7,7 +7,7 @@ import App from './App';
 
 
 import { combineReducers, createStore } from 'redux'
-import todos, { addToDo, visibleTodos, toggleTodo, deleteTodo } from './Store/ToDos'
+import todos, { addToDo, filterTodos, toggleTodo, deleteTodo } from './Store/ToDos'
 import Counter, { addInc, addDec, reset } from './Store/Counter'
 import ItemsList, { addItem } from './Store/ItemsList'
 
@@ -35,7 +35,7 @@ window.addToDo = (text) => store.dispatch(addToDo(text))
 window.decrement = () => store.dispatch(addDec())
 window.restart = () => store.dispatch(reset())
 window.addItem = (title, price) => store.dispatch(addItem(title, price))
-window.filter = (text) => store.dispatch(visibleTodos(text))
+window.filter = (text) => store.dispatch(filterTodos(text))
 window.toggle = (index) => store.dispatch(toggleTodo(index))
 window.delete = (index) => store.dispatch(deleteTodo(index))
 
